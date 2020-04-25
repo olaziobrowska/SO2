@@ -1,6 +1,7 @@
 import model.Country;
 import model.Person;
 import model.Tile;
+import ui.SummaryPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,10 +41,14 @@ public class App extends JFrame {
 
         pane.add(countryPanel);
 
-        JPanel summary = new JPanel();
-        summary.setBackground(Color.yellow);
+        SummaryPanel summary = new SummaryPanel(poland, italy, romania);
+
+        poland.setSummaryPanel(summary);
+        italy.setSummaryPanel(summary);
+        romania.setSummaryPanel(summary);
+
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 200;      //make this component tall
+        c.ipady = 100;      //make this component tall
         c.anchor = GridBagConstraints.PAGE_END; //bottom of space
         c.weightx = 0.0;
         c.gridwidth = 3;

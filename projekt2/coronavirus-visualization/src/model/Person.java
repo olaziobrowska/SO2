@@ -31,6 +31,7 @@ public class Person extends Thread {
             try {
                 Thread.sleep(this.sleepTime);
                 tryToMove();
+                this.country.updateSummary();
             }
             catch (InterruptedException e) {
                 e.printStackTrace();

@@ -1,5 +1,7 @@
 package model;
 
+import ui.SummaryPanel;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -17,6 +19,7 @@ public class Country extends JPanel {
     private int countryWidth;
     private int countryHeight;
     private Random r;
+    private SummaryPanel summaryPanel;
 
     public Country(String name, int width, int height, int populationNumber) {
         initUI(name, width, height);
@@ -57,6 +60,19 @@ public class Country extends JPanel {
             people.add(p);
         }
         return people;
+    }
+
+    public int getInfectedNumber() {
+        int i = 0;
+        for (Person p : this.people) {
+            if (p.getStatus().equals(HealthStatus.INFECTED))
+                i++;
+        }
+        return i;
+    }
+
+    public void updateSummary() {
+        this.summaryPanel.updateSummary(this.name, this.people.size(), getInfectedNumber());
     }
 
     public void movePerson(Person p, int destinationX, int destinationY) {
@@ -101,6 +117,14 @@ public class Country extends JPanel {
         }
 
         return tiles;
+    }
+
+    public SummaryPanel getSummaryPanel() {
+        return summaryPanel;
+    }
+
+    public void setSummaryPanel(SummaryPanel summaryPanel) {
+        this.summaryPanel = summaryPanel;
     }
 
     public int getCountryWidth() {
