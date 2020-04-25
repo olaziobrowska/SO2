@@ -28,7 +28,7 @@ public class Country extends JPanel {
         this.setLayout(new GridLayout(width, height));
         this.setBackground(Color.blue);
         this.setPreferredSize(new Dimension(500, 500));
-        this.setBorder(BorderFactory.createTitledBorder(null, name, TitledBorder.CENTER, TitledBorder.BOTTOM, new Font("times new roman",Font.PLAIN,12), Color.yellow));
+        this.setBorder(BorderFactory.createTitledBorder(null, name, TitledBorder.CENTER, TitledBorder.BOTTOM, new Font("times new roman",Font.PLAIN,24), Color.yellow));
     }
 
     private List<Person> preparePeople(int populationNumber) {

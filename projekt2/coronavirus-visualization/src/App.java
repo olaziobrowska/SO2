@@ -19,7 +19,11 @@ public class App extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel pane = (JPanel) getContentPane();
+        setLayout(new BorderLayout());
+
+        JPanel pane = new JPanel();
+        getContentPane().add(pane, BorderLayout.CENTER);
+
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -39,13 +43,14 @@ public class App extends JFrame {
         JPanel summary = new JPanel();
         summary.setBackground(Color.yellow);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 40;      //make this component tall
+        c.ipady = 200;      //make this component tall
         c.anchor = GridBagConstraints.PAGE_END; //bottom of space
         c.weightx = 0.0;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
         pane.add(summary, c);
+        pack();
     }
 
 

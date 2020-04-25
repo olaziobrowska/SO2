@@ -22,7 +22,7 @@ public class Tile extends JPanel {
     }
 
     private void initUI() {
-        this.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setBackground(NO_PERSON_COLOR);
     }
 
