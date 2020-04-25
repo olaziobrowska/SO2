@@ -9,14 +9,18 @@ import java.util.Random;
 
 public class Country extends JPanel {
 
+    private static final int INFECTION_PROBABILITY_CLOSE = 40;
+
     private String name;
     private Tile[][] tiles;
     private List<Person> people;
     private int countryWidth;
     private int countryHeight;
+    private Random r;
 
     public Country(String name, int width, int height, int populationNumber) {
         initUI(name, width, height);
+        this.r = new Random();
         this.countryWidth = width;
         this.countryHeight = height;
         this.name = name;
@@ -36,7 +40,6 @@ public class Country extends JPanel {
     }
 
     private List<Person> preparePeople(int populationNumber) {
-        Random r = new Random();
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < populationNumber; i++) {
             int initialX = r.nextInt(this.tiles.length);
@@ -48,6 +51,8 @@ public class Country extends JPanel {
             }
 
             Person p = new Person(this.name + " " + (i + 1), initialX, initialY, this);
+            if (i == 0)
+                p.setStatus(HealthStatus.INFECTED);
             tiles[initialX][initialY].setVisitor(p);
             people.add(p);
         }
@@ -55,9 +60,35 @@ public class Country extends JPanel {
     }
 
     public void movePerson(Person p, int destinationX, int destinationY) {
-        // TODO: tutaj semafor
         this.tiles[p.getPositionX()][p.getPositionY()].free();
+
+        if (isInfectedPersonNearby(destinationX, destinationY)) {
+            int infectionProbability = r.nextInt(100);
+            if (infectionProbability > INFECTION_PROBABILITY_CLOSE) {
+                p.setStatus(HealthStatus.INFECTED);
+            }
+        }
+
         this.tiles[destinationX][destinationY].setVisitor(p);
+    }
+
+    private boolean isInfectedPersonNearby(int x, int y) {
+        int right = (x + 1) % countryWidth;
+        int left = x - 1 >= 0 ? x - 1 : 0;
+        int up = (y + 1) % countryHeight;
+        int down = y - 1 >= 0 ? y - 1 : 0;
+
+        if (isInfectedTile(right, y) || isInfectedTile(left, y) || isInfectedTile(x, up) || isInfectedTile(x , down)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isInfectedTile(int x, int y) {
+        if (! tiles[x][y].isFree()) {
+            return tiles[x][y].getVisitor().getStatus() == HealthStatus.INFECTED;
+        }
+        return false;
     }
 
     private Tile[][] prepareTiles(int width, int height) {
