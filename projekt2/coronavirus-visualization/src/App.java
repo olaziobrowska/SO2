@@ -51,6 +51,10 @@ public class App extends JFrame {
         c.gridy = 1;
         pane.add(summary, c);
         pack();
+
+        poland.getPeople().forEach(Thread::start);
+        italy.getPeople().forEach(Thread::start);
+        romania.getPeople().forEach(Thread::start);
     }
 
 

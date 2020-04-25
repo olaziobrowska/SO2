@@ -12,9 +12,13 @@ public class Country extends JPanel {
     private String name;
     private Tile[][] tiles;
     private List<Person> people;
+    private int countryWidth;
+    private int countryHeight;
 
     public Country(String name, int width, int height, int populationNumber) {
         initUI(name, width, height);
+        this.countryWidth = width;
+        this.countryHeight = height;
         this.name = name;
         System.out.println("Creating country of width = " + width + " and height = " + height);
         this.tiles = prepareTiles(width, height);
@@ -43,13 +47,18 @@ public class Country extends JPanel {
                 initialY = r.nextInt(this.tiles[0].length);
             }
 
-            Person p = new Person(this.name + " " + (i + 1), initialX, initialY);
+            Person p = new Person(this.name + " " + (i + 1), initialX, initialY, this);
             tiles[initialX][initialY].setVisitor(p);
             people.add(p);
         }
         return people;
     }
 
+    public void movePerson(Person p, int destinationX, int destinationY) {
+        // TODO: tutaj semafor
+        this.tiles[p.getPositionX()][p.getPositionY()].free();
+        this.tiles[destinationX][destinationY].setVisitor(p);
+    }
 
     private Tile[][] prepareTiles(int width, int height) {
         Tile[][] tiles = new Tile[width][height];
@@ -61,6 +70,22 @@ public class Country extends JPanel {
         }
 
         return tiles;
+    }
+
+    public int getCountryWidth() {
+        return countryWidth;
+    }
+
+    public void setCountryWidth(int countryWidth) {
+        this.countryWidth = countryWidth;
+    }
+
+    public int getCountryHeight() {
+        return countryHeight;
+    }
+
+    public void setCountryHeight(int countryHeight) {
+        this.countryHeight = countryHeight;
     }
 
     public String getName() {
