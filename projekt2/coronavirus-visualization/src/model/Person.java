@@ -50,7 +50,11 @@ public class Person extends Thread {
         if (newY < 0)
             newY = 0;
 
-        this.country.movePerson(this, newX, newY);
+        if (this.country.getTiles()[newX][newY].isFree()) {
+            this.country.movePerson(this, newX, newY);
+            this.positionX = newX;
+            this.positionY = newY;
+        }
     }
 
     public String getPersonName() {
